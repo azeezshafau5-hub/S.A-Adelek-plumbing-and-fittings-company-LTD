@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adelek Plumbering & Pipe Fitting Nig. Ltd</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="icon"  href="adelek.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --navy:    #1a3a6b;
+      --navy2:   #122a52;
+      --burgundy:#7b2d52;
+      --burgandy2:#5a1f3a;
+      --white:   #ffffff;
+      --offwhite:#f4f7fc;
+      --gray:    #64748b;
+      --dark:    #0d1b35;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: #2d2d2d; overflow-x: hidden; }
+    h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
+
+    /* ── WATER DROP CURSOR ── */
+    .drop-cursor { cursor: crosshair; }
+
+    /* ══════════════════════════════
+       KEYFRAME ANIMATIONS
+    ══════════════════════════════ */
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(40px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity:0; } to { opacity:1; }
+    }
+    @keyframes slideLeft {
+      from { opacity:0; transform:translateX(-60px); }
+      to   { opacity:1; transform:translateX(0); }
+    }
+    @keyframes slideRight {
+      from { opacity:0; transform:translateX(60px); }
+      to   { opacity:1; transform:translateX(0); }
+    }
+    /* Water drop falling */
+    @keyframes dropFall {
+      0%   { transform:translateY(-20px); opacity:0; }
+      20%  { opacity:1; }
+      80%  { opacity:1; }
+      100% { transform:translateY(120px); opacity:0; }
+    }
+    /* Pipe water flow */
+    @keyframes pipeFlow {
+      0%   { transform:translateX(-100%); }
+      100% { transform:translateX(400%); }
+    }
+    /* Wrench spin */
+    @keyframes wrenchSpin {
+      0%   { transform:rotate(0deg); }
+      25%  { transform:rotate(-30deg); }
+      75%  { transform:rotate(30deg); }
+      100% { transform:rotate(0deg); }
+    }
+    /* Pulse ring */
+    @keyframes pulseRing {
+      0%   { transform:scale(1);   opacity:0.6; }
+      100% { transform:scale(1.8); opacity:0; }
+    }
+    /* Float gentle */
+    @keyframes float {
+      0%,100% { transform:translateY(0); }
+      50%      { transform:translateY(-10px); }
+    }
+    /* Shimmer text */
+    @keyframes shimmer {
+      0%   { background-position:-200% center; }
+      100% { background-position:200% center; }
+    }
+    /* Counter tick */
+    @keyframes countUp {
+      from { opacity:0; transform:scale(0.6); }
+      to   { opacity:1; transform:scale(1); }
+    }
+    /* Water wave */
+    @keyframes wave {
+      0%   { transform:translateX(0); }
+      100% { transform:translateX(-50%); }
+    }
+    /* Ripple on buttons */
+    @keyframes ripple {
+      0%   { transform:scale(0); opacity:0.5; }
+      100% { transform:scale(4); opacity:0; }
+    }
+    /* Drip drip */
+    @keyframes drip {
+      0%,100% { transform:scaleY(0); transform-origin:top; opacity:1; }
+      50%      { transform:scaleY(1); opacity:1; }
+      80%      { transform:scaleY(1) translateY(20px); opacity:0; }
+    }
+    /* Scroll reveal */
+    .reveal {
+      opacity:0;
+      transform:translateY(35px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-left { opacity:0; transform:translateX(-40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-left.visible { opacity:1; transform:translateX(0); }
+    .reveal-right { opacity:0; transform:translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-right.visible { opacity:1; transform:translateX(0); }
+    .delay-1 { transition-delay:0.1s; }
+    .delay-2 { transition-delay:0.2s; }
+    .delay-3 { transition-delay:0.3s; }
+    .delay-4 { transition-delay:0.4s; }
+    .delay-5 { transition-delay:0.5s; }
+
+    /* ══════════════════════════════
+       NAVBAR
+    ══════════════════════════════ */
+    #navbar {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      background:rgba(26,58,107,0.97);
+      backdrop-filter:blur(12px);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    #navbar.scrolled {
+      background:rgba(13,27,53,0.98);
+      box-shadow:0 4px 30px rgba(0,0,0,0.3);
+    }
+    .nav-link {
+      position:relative;
+      color:#fff;
+      font-size:0.85rem;
+      font-weight:600;
+      letter-spacing:0.05em;
+      text-decoration:none;
+      padding-bottom:4px;
+      transition: color 0.3s;
+    }
+    .nav-link::after {
+      content:'';
+      position:absolute;
+      bottom:0; left:0;
+      width:0; height:2px;
+      background:var(--burgundy);
+      transition:width 0.3s ease;
+    }
+    .nav-link:hover { color:#c8d8f8; }
+    .nav-link:hover::after { width:100%; }
+
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    .hero {
+      min-height:100vh;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--navy) 50%, var(--navy2) 100%);
+      position:relative;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+    }
+    /* animated pipe lines in hero */
+    .pipe-line {
+      position:absolute;
+      height:3px;
+      background:rgba(255,255,255,0.06);
+      border-radius:2px;
+      overflow:hidden;
+    }
+    .pipe-line::after {
+      content:'';
+      position:absolute;
+      top:0; left:0;
+      width:60px; height:100%;
+      background:linear-gradient(90deg, transparent, rgba(123,45,82,0.7), transparent);
+      animation: pipeFlow 3s linear infinite;
+    }
+    .shimmer-text {
+      background:linear-gradient(90deg, #fff 0%, #c8d8f8 30%, var(--burgundy) 50%, #c8d8f8 70%, #fff 100%);
+      background-size:200% auto;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      animation:shimmer 4s linear infinite;
+    }
+    /* Water drops in hero */
+    .water-drop {
+      position:absolute;
+      width:8px; height:14px;
+      background:rgba(123,45,82,0.6);
+      border-radius:50% 50% 50% 50% / 40% 40% 60% 60%;
+      animation:dropFall 2.5s ease-in infinite;
+    }
+    /* Pulse behind CTA */
+    .pulse-wrap { position:relative; display:inline-block; }
+    .pulse-wrap::before {
+      content:'';
+      position:absolute; inset:0;
+      border-radius:50px;
+      background:var(--burgundy);
+      animation:pulseRing 2s ease-out infinite;
+    }
+
+    /* ══════════════════════════════
+       SERVICES CARDS
+    ══════════════════════════════ */
+    .service-card {
+      background:#fff;
+      border-radius:16px;
+      padding:2rem 1.5rem;
+      border:2px solid transparent;
+      box-shadow:0 4px 24px rgba(26,58,107,0.08);
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .service-card::before {
+      content:'';
+      position:absolute;
+      top:0; left:0; right:0;
+      height:4px;
+      background:linear-gradient(90deg, var(--navy), var(--burgundy));
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform 0.4s ease;
+    }
+    .service-card:hover {
+      transform:translateY(-10px);
+      box-shadow:0 20px 50px rgba(26,58,107,0.18);
+      border-color:rgba(26,58,107,0.15);
+    }
+    .service-card:hover::before { transform:scaleX(1); }
+    .service-card:hover .service-icon { animation:wrenchSpin 0.6s ease; }
+
+    .service-icon {
+      width:64px; height:64px;
+      border-radius:16px;
+      background:linear-gradient(135deg, var(--navy), var(--navy2));
+      display:flex; align-items:center; justify-content:center;
+      font-size:28px;
+      margin-bottom:1.25rem;
+      transition:background 0.3s;
+    }
+    .service-card:hover .service-icon {
+      background:linear-gradient(135deg, var(--burgundy), var(--burgandy2));
+    }
+
+    /* ══════════════════════════════
+       WHY CHOOSE US — STATS
+    ══════════════════════════════ */
+    .stat-card {
+      text-align:center;
+      padding:2rem 1rem;
+      border-radius:16px;
+      background:rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.12);
+      transition: transform 0.3s, background 0.3s;
+      animation:countUp 0.6s ease forwards;
+      animation-play-state:paused;
+    }
+    .stat-card.visible { animation-play-state:running; }
+    .stat-card:hover {
+      transform:translateY(-6px);
+      background:rgba(255,255,255,0.12);
+    }
+
+    /* ══════════════════════════════
+       PROCESS STEPS
+    ══════════════════════════════ */
+    .step-line {
+      position:absolute;
+      top:32px; left:calc(50% + 32px);
+      width:calc(100% - 64px);
+      height:2px;
+      background:linear-gradient(90deg, var(--navy), var(--burgundy));
+    }
+
+    /* ══════════════════════════════
+       TESTIMONIAL CARDS
+    ══════════════════════════════ */
+    .testimonial-card {
+      background:#fff;
+      border-radius:20px;
+      padding:2rem;
+      box-shadow:0 8px 32px rgba(26,58,107,0.1);
+      border-left:4px solid var(--burgundy);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation:float 4s ease-in-out infinite;
+    }
+    .testimonial-card:hover {
+      transform:translateY(-6px);
+      box-shadow:0 16px 48px rgba(26,58,107,0.18);
+    }
+    .testimonial-card:nth-child(2) { animation-delay:1.5s; }
+
+    /* ══════════════════════════════
+       CTA SECTION — WAVE
+    ══════════════════════════════ */
+    .wave-container { position:relative; overflow:hidden; }
+    .wave-bg {
+      position:absolute; bottom:0; left:0;
+      width:200%; height:80px;
+      background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80'%3E%3Cpath fill='%231a3a6b' fill-opacity='0.3' d='M0,40 C360,80 720,0 1080,40 C1260,60 1350,20 1440,40 L1440,80 L0,80 Z'/%3E%3C/svg%3E");
+      background-repeat:repeat-x;
+      animation:wave 6s linear infinite;
+    }
+
+    /* ══════════════════════════════
+       CONTACT FORM
+    ══════════════════════════════ */
+    .form-input {
+      width:100%;
+      padding:0.85rem 1.1rem;
+      border:2px solid #e2e8f0;
+      border-radius:10px;
+      font-family:'Inter',sans-serif;
+      font-size:0.95rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline:none;
+    }
+    .form-input:focus {
+      border-color:var(--navy);
+      box-shadow:0 0 0 3px rgba(26,58,107,0.12);
+    }
+
+    /* ══════════════════════════════
+       BUTTONS
+    ══════════════════════════════ */
+    .btn-primary {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:0.9rem 2rem;
+      background:var(--burgundy);
+      color:#fff;
+      font-family:'Montserrat',sans-serif;
+      font-weight:700;
+      font-size:0.9rem;
+      letter-spacing:0.05em;
+      border-radius:50px;
+      border:none;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      text-decoration:none;
+    }
+    .btn-primary:hover {
+      background:var(--burgandy2);
+      transform:translateY(-2px);
+      box-shadow:0 10px 30px rgba(123,45,82,0.4);
+    }
+    .btn-secondary {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:0.9rem 2rem;
+      background:transparent;
+      color:#fff;
+      font-family:'Montserrat',sans-serif;
+      font-weight:700;
+      font-size:0.9rem;
+      letter-spacing:0.05em;
+      border-radius:50px;
+      border:2px solid rgba(255,255,255,0.5);
+      cursor:pointer;
+      transition: border-color 0.3s, background 0.3s, transform 0.2s;
+      text-decoration:none;
+    }
+    .btn-secondary:hover {
+      border-color:#fff;
+      background:rgba(255,255,255,0.1);
+      transform:translateY(-2px);
+    }
+
+    /* Mobile menu */
+    #mobile-menu { max-height:0; overflow:hidden; opacity:0; transition:max-height 0.4s ease, opacity 0.4s; }
+    #mobile-menu.open { max-height:400px; opacity:1; }
+
+    /* Float badge */
+    .badge {
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 14px;
+      border-radius:50px;
+      border:1px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.08);
+      font-size:0.75rem;
+      font-weight:600;
+      letter-spacing:0.08em;
+      color:#c8d8f8;
+      animation:fadeIn 1s ease forwards;
+    }
+
+    /* Drip decoration */
+    .drip-bar {
+      display:flex; gap:16px; align-items:flex-end;
+      padding:0 2rem;
+    }
+    .drip {
+      width:3px;
+      background:var(--burgundy);
+      border-radius:0 0 4px 4px;
+      animation:drip 2s ease-in-out infinite;
+    }
+
+    /* Phone floating CTA */
+    .float-cta {
+      position:fixed;
+      bottom:24px; right:24px;
+      z-index:99;
+      display:flex; flex-direction:column; gap:10px;
+      animation:float 3s ease-in-out infinite;
+    }
+    .float-cta a {
+      display:flex; align-items:center; gap:8px;
+      background:var(--burgundy);
+      color:#fff;
+      font-family:'Montserrat',sans-serif;
+      font-weight:700;
+      font-size:0.8rem;
+      padding:0.75rem 1.25rem;
+      border-radius:50px;
+      box-shadow:0 8px 32px rgba(123,45,82,0.5);
+      text-decoration:none;
+      transition:background 0.3s, transform 0.2s;
+    }
+    .float-cta a:hover { transform:scale(1.05); }
+    .float-cta .wa-btn {
+      background:#25D366;
+      box-shadow:0 8px 32px rgba(37,211,102,0.4);
+    }
+    .float-cta .wa-btn:hover { background:#128C7E; }
+
+    /* Section label */
+    .section-label {
+      display:inline-block;
+      font-size:0.72rem;
+      font-weight:700;
+      letter-spacing:0.15em;
+      text-transform:uppercase;
+      color:var(--burgundy);
+      margin-bottom:0.75rem;
+    }
+    .section-title {
+      font-size:clamp(1.8rem,4vw,2.8rem);
+      font-weight:900;
+      color:var(--navy);
+      line-height:1.2;
+      margin-bottom:1rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     FLOATING CALL BUTTON
+════════════════════════════════════ -->
+<div class="float-cta">
+  <a href="tel:+2348060175353">📞 Call Now</a> <a href="https://wa.me/2348060175353" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.2rem;background:#25D366;color:#fff;font-family:Montserrat,sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.06em;border-radius:50px;text-decoration:none;transition:all 0.3s;margin-left:8px;" onmouseover="this.style.background='#128C7E';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#25D366';this.style.transform='translateY(0)'">💬 WhatsApp</a>
+</div>
+
+<!-- ════════════════════════════════════
+     NAVBAR
+════════════════════════════════════ -->
+<nav id="navbar">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;height:70px;">
+
+      <!-- Logo -->
+      <a href="#" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="adelek.png" alt="Adelek Logo" style="height:42px;width:auto;"/>
+      </a>
+
+      <!-- Desktop links -->
+      <ul style="display:flex;gap:2rem;list-style:none;align-items:center;" class="hidden-mobile">
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#why" class="nav-link">Why Us</a></li>
+        <li><a href="#process" class="nav-link">Process</a></li>
+        <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li>
+          <a href="tel:+2348060175353" class="btn-primary" style="padding:0.6rem 1.4rem;font-size:0.8rem;">
+            📞 Get a Free Quote
+          </a>
+        </li>
+      </ul>
+
+      <!-- Hamburger -->
+      <button id="hamburger" style="display:none;background:none;border:none;cursor:pointer;color:#fff;font-size:1.5rem;" aria-label="Menu">☰</button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" style="background:rgba(13,27,53,0.98);border-radius:12px;margin-bottom:8px;padding:0 1rem;">
+      <ul style="list-style:none;padding:1rem 0;display:flex;flex-direction:column;gap:1rem;">
+        <li><a href="#services" class="nav-link" onclick="closeMobile()">Services</a></li>
+        <li><a href="#why" class="nav-link" onclick="closeMobile()">Why Us</a></li>
+        <li><a href="#process" class="nav-link" onclick="closeMobile()">Process</a></li>
+        <li><a href="#testimonials" class="nav-link" onclick="closeMobile()">Reviews</a></li>
+        <li><a href="#contact" class="nav-link" onclick="closeMobile()">Contact</a></li>
+        <li><a href="tel:+2348060175353" class="btn-primary" style="font-size:0.85rem;width:fit-content;">📞 Free Quote</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════
+     HERO
+════════════════════════════════════ -->
+<section class="hero" id="home">
+
+  <!-- Pipe lines decoration -->
+  <div class="pipe-line" style="top:20%;left:0;width:40%;animation-delay:0s;"></div>
+  <div class="pipe-line" style="top:70%;right:0;width:35%;animation-delay:1s;"></div>
+  <div class="pipe-line" style="top:45%;left:10%;width:20%;animation-delay:0.5s;"></div>
+
+  <!-- Water drops -->
+  <div class="water-drop" style="top:5%;left:20%;animation-delay:0s;"></div>
+  <div class="water-drop" style="top:10%;left:50%;animation-delay:0.8s;"></div>
+  <div class="water-drop" style="top:3%;left:75%;animation-delay:1.5s;"></div>
+  <div class="water-drop" style="top:8%;left:88%;animation-delay:0.4s;"></div>
+
+  <!-- Big circle decoration -->
+  <div style="position:absolute;right:-100px;top:50%;transform:translateY(-50%);width:500px;height:500px;border-radius:50%;border:2px solid rgba(255,255,255,0.04);"></div>
+  <div style="position:absolute;right:-50px;top:50%;transform:translateY(-50%);width:380px;height:380px;border-radius:50%;border:2px solid rgba(123,45,82,0.12);"></div>
+
+  <div style="max-width:1200px;margin:0 auto;padding:8rem 1.5rem 4rem;width:100%;position:relative;z-index:2;">
+    <div style="max-width:680px;">
+
+      <!-- Badge -->
+      <div class="badge" style="animation-delay:0s;margin-bottom:1.5rem;">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--burgundy);display:inline-block;animation:pulseRing 1.5s ease-out infinite;"></span>
+        TRUSTED PLUMBING EXPERTS IN NIGERIA
+      </div>
+
+      <!-- Headline -->
+      <h1 style="font-size:clamp(2.2rem,6vw,4rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:1.25rem;animation:fadeUp 0.9s ease forwards;">
+        Nigeria's Most <br>
+        <span class="shimmer-text">Reliable Plumbing</span><br>
+        <span style="color:rgba(255,255,255,0.85);">& Pipe Fitting Company</span>
+      </h1>
+
+      <!-- Sub -->
+      <p style="color:rgba(200,216,248,0.85);font-size:1.1rem;line-height:1.7;margin-bottom:2.5rem;animation:fadeUp 0.9s 0.2s ease forwards;opacity:0;">
+        From emergency leaks to full pipe installation — Adelek Plumbering delivers fast, professional, and affordable solutions across Nigeria. Available <strong style="color:#fff;">24/7</strong>.
+      </p>
+
+      <!-- CTAs -->
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;animation:fadeUp 0.9s 0.4s ease forwards;opacity:0;">
+        <div class="pulse-wrap">
+          <a href="#contact" class="btn-primary" style="position:relative;z-index:1;">
+            🔧 Get Free Quote
+          </a>
+        </div>
+        <a href="#services" class="btn-secondary">See Our Services →</a>
+      </div>
+
+      <!-- Trust badges -->
+      <div style="display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:3rem;animation:fadeIn 1s 0.8s ease forwards;opacity:0;">
+        <div style="display:flex;align-items:center;gap:6px;color:rgba(200,216,248,0.7);font-size:0.82rem;font-weight:600;">
+          ✅ <span>Licensed & Certified</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;color:rgba(200,216,248,0.7);font-size:0.82rem;font-weight:600;">
+          ⚡ <span>24/7 Emergency Service</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;color:rgba(200,216,248,0.7);font-size:0.82rem;font-weight:600;">
+          💯 <span>Satisfaction Guaranteed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     STATS BANNER
+════════════════════════════════════ -->
+<section style="background:linear-gradient(135deg,var(--navy),var(--navy2));padding:3rem 1.5rem;">
+  <div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.5rem;">
+    <div class="stat-card reveal">
+      <div style="font-size:2.4rem;font-weight:900;color:#fff;font-family:'Montserrat',sans-serif;">500+</div>
+      <div style="color:rgba(200,216,248,0.7);font-size:0.85rem;margin-top:4px;">Projects Completed</div>
+    </div>
+    <div class="stat-card reveal delay-1">
+      <div style="font-size:2.4rem;font-weight:900;color:#fff;font-family:'Montserrat',sans-serif;">15+</div>
+      <div style="color:rgba(200,216,248,0.7);font-size:0.85rem;margin-top:4px;">Years Experience</div>
+    </div>
+    <div class="stat-card reveal delay-2">
+      <div style="font-size:2.4rem;font-weight:900;color:#fff;font-family:'Montserrat',sans-serif;">98%</div>
+      <div style="color:rgba(200,216,248,0.7);font-size:0.85rem;margin-top:4px;">Happy Clients</div>
+    </div>
+    <div class="stat-card reveal delay-3">
+      <div style="font-size:2.4rem;font-weight:900;color:var(--burgundy);font-family:'Montserrat',sans-serif;">24/7</div>
+      <div style="color:rgba(200,216,248,0.7);font-size:0.85rem;margin-top:4px;">Emergency Support</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SERVICES
+════════════════════════════════════ -->
+<section id="services" style="background:var(--offwhite);padding:6rem 1.5rem;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:3.5rem;">
+      <span class="section-label reveal">What We Do</span>
+      <h2 class="section-title reveal delay-1">Complete Plumbing Solutions</h2>
+      <p style="color:var(--gray);max-width:540px;margin:0 auto;line-height:1.7;" class="reveal delay-2">
+        From a dripping tap to a full pipe network — we handle every plumbing challenge with precision and speed.
+      </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;">
+
+      <div class="service-card reveal delay-1">
+        <div class="service-icon">🚰</div>
+        <h3 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.6rem;">Pipe Installation</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6;">Full pipe network installation for homes, offices, and industrial buildings. We use only quality-certified materials.</p>
+      </div>
+
+      <div class="service-card reveal delay-2">
+        <div class="service-icon">🔧</div>
+        <h3 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.6rem;">Leak Detection & Repair</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6;">Fast diagnosis and repair of burst pipes, hidden leaks, and water damage before they become expensive problems.</p>
+      </div>
+
+      <div class="service-card reveal delay-3">
+        <div class="service-icon">🛁</div>
+        <h3 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.6rem;">Bathroom & Toilet Fitting</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6;">Complete bathroom installation — sinks, toilets, showers, bathtubs, and tiling. Built to last, finished to impress.</p>
+      </div>
+
+      <div class="service-card reveal delay-1">
+        <div class="service-icon">🏗️</div>
+        <h3 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.6rem;">Overhead Tank Installation</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6;">Water storage tank setup, pump installation, and connection to your home's supply system — done right the first time.</p>
+      </div>
+
+      <div class="service-card reveal delay-2">
+        <div class="service-icon">🚨</div>
+        <h3 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.6rem;">Emergency Plumbing</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6;">Day or night, we respond fast. No extra charge for emergency call-outs. Your problem is our priority.</p>
+      </div>
+
+      <div class="service-card reveal delay-3">
+        <div class="service-icon">🏢</div>
+        <h3 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.6rem;">Commercial Plumbing</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6;">Large-scale plumbing for estates, hotels, hospitals, and factories. We manage projects of any size with full documentation.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     WHY CHOOSE US
+════════════════════════════════════ -->
+<section id="why" style="background:linear-gradient(135deg,var(--dark),var(--navy));padding:6rem 1.5rem;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;">
+
+    <!-- Left: text -->
+    <div class="reveal-left">
+      <span class="section-label" style="color:#c8d8f8;">Why Choose Adelek</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;color:#fff;line-height:1.2;margin-bottom:1.5rem;">
+        We Don't Just Fix Pipes.<br>
+        <span style="color:var(--burgundy);">We Build Trust.</span>
+      </h2>
+
+      <div style="display:flex;flex-direction:column;gap:1.2rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="min-width:42px;height:42px;border-radius:10px;background:var(--burgundy);display:flex;align-items:center;justify-content:center;font-size:18px;">⚡</div>
+          <div>
+            <h4 style="color:#fff;font-weight:700;margin-bottom:4px;">Same-Day Response</h4>
+            <p style="color:rgba(200,216,248,0.7);font-size:0.9rem;line-height:1.6;">We respond to your call within 1 hour and arrive at your location the same day.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="min-width:42px;height:42px;border-radius:10px;background:var(--burgundy);display:flex;align-items:center;justify-content:center;font-size:18px;">🛡️</div>
+          <div>
+            <h4 style="color:#fff;font-weight:700;margin-bottom:4px;">2-Year Workmanship Warranty</h4>
+            <p style="color:rgba(200,216,248,0.7);font-size:0.9rem;line-height:1.6;">Every job we do is backed by our 2-year warranty. If it fails, we fix it free.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="min-width:42px;height:42px;border-radius:10px;background:var(--burgundy);display:flex;align-items:center;justify-content:center;font-size:18px;">💰</div>
+          <div>
+            <h4 style="color:#fff;font-weight:700;margin-bottom:4px;">Transparent Pricing</h4>
+            <p style="color:rgba(200,216,248,0.7);font-size:0.9rem;line-height:1.6;">No hidden charges. We give you a full quote before we start any work.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="min-width:42px;height:42px;border-radius:10px;background:var(--burgundy);display:flex;align-items:center;justify-content:center;font-size:18px;">👷</div>
+          <div>
+            <h4 style="color:#fff;font-weight:700;margin-bottom:4px;">Fully Licensed Technicians</h4>
+            <p style="color:rgba(200,216,248,0.7);font-size:0.9rem;line-height:1.6;">All our plumbers are certified, background-checked, and trained to the highest standards.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: visual card -->
+    <div class="reveal-right" style="animation:float 4s ease-in-out infinite;">
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:2.5rem;backdrop-filter:blur(8px);">
+        <div style="text-align:center;margin-bottom:2rem;">
+          <img src="adelek.png" alt="Adelek" style="height:70px;width:auto;filter:brightness(0) invert(1);opacity:0.9;"/>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div style="background:rgba(123,45,82,0.3);border-radius:14px;padding:1.2rem;text-align:center;">
+            <div style="font-size:1.8rem;font-weight:900;color:#fff;font-family:'Montserrat',sans-serif;">500+</div>
+            <div style="color:rgba(200,216,248,0.7);font-size:0.78rem;margin-top:2px;">Jobs Done</div>
+          </div>
+          <div style="background:rgba(26,58,107,0.5);border-radius:14px;padding:1.2rem;text-align:center;">
+            <div style="font-size:1.8rem;font-weight:900;color:#fff;font-family:'Montserrat',sans-serif;">15yr</div>
+            <div style="color:rgba(200,216,248,0.7);font-size:0.78rem;margin-top:2px;">Experience</div>
+          </div>
+          <div style="background:rgba(26,58,107,0.5);border-radius:14px;padding:1.2rem;text-align:center;">
+            <div style="font-size:1.8rem;font-weight:900;color:#fff;font-family:'Montserrat',sans-serif;">24/7</div>
+            <div style="color:rgba(200,216,248,0.7);font-size:0.78rem;margin-top:2px;">Available</div>
+          </div>
+          <div style="background:rgba(123,45,82,0.3);border-radius:14px;padding:1.2rem;text-align:center;">
+            <div style="font-size:1.8rem;font-weight:900;color:#fff;font-family:'Montserrat',sans-serif;">98%</div>
+            <div style="color:rgba(200,216,248,0.7);font-size:0.78rem;margin-top:2px;">Satisfaction</div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;padding:1rem;background:rgba(123,45,82,0.25);border-radius:12px;text-align:center;">
+          <p style="color:rgba(200,216,248,0.9);font-size:0.85rem;font-weight:600;">⭐⭐⭐⭐⭐ Rated 5 Stars by Our Clients</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════ -->
+<section id="process" style="background:#fff;padding:6rem 1.5rem;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:4rem;">
+      <span class="section-label reveal">Simple Process</span>
+      <h2 class="section-title reveal delay-1">How It Works</h2>
+      <p style="color:var(--gray);max-width:500px;margin:0 auto;line-height:1.7;" class="reveal delay-2">Getting your plumbing fixed is easy. Just 4 simple steps.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;position:relative;">
+
+      <div class="reveal delay-1" style="text-align:center;">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--burgundy));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:24px;box-shadow:0 8px 24px rgba(26,58,107,0.25);transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.15) rotate(10deg)'" onmouseout="this.style.transform='scale(1) rotate(0deg)'">📞</div>
+        <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;color:var(--burgundy);margin-bottom:6px;">STEP 01</div>
+        <h4 style="font-weight:700;color:var(--navy);margin-bottom:6px;">Call or Message Us</h4>
+        <p style="color:var(--gray);font-size:0.87rem;line-height:1.6;">Reach us by phone, WhatsApp, or the form below. Tell us your problem.</p>
+      </div>
+
+      <div class="reveal delay-2" style="text-align:center;">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--burgundy));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:24px;box-shadow:0 8px 24px rgba(26,58,107,0.25);transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.15) rotate(10deg)'" onmouseout="this.style.transform='scale(1) rotate(0deg)'">📋</div>
+        <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;color:var(--burgundy);margin-bottom:6px;">STEP 02</div>
+        <h4 style="font-weight:700;color:var(--navy);margin-bottom:6px;">Get a Free Quote</h4>
+        <p style="color:var(--gray);font-size:0.87rem;line-height:1.6;">We assess your issue and give you a clear, upfront quote. No surprises.</p>
+      </div>
+
+      <div class="reveal delay-3" style="text-align:center;">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--burgundy));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:24px;box-shadow:0 8px 24px rgba(26,58,107,0.25);transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.15) rotate(10deg)'" onmouseout="this.style.transform='scale(1) rotate(0deg)'">🔧</div>
+        <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;color:var(--burgundy);margin-bottom:6px;">STEP 03</div>
+        <h4 style="font-weight:700;color:var(--navy);margin-bottom:6px;">We Fix It Fast</h4>
+        <p style="color:var(--gray);font-size:0.87rem;line-height:1.6;">Our expert technicians arrive on time and complete the job efficiently.</p>
+      </div>
+
+      <div class="reveal delay-4" style="text-align:center;">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--burgundy));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:24px;box-shadow:0 8px 24px rgba(26,58,107,0.25);transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.15) rotate(10deg)'" onmouseout="this.style.transform='scale(1) rotate(0deg)'">✅</div>
+        <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;color:var(--burgundy);margin-bottom:6px;">STEP 04</div>
+        <h4 style="font-weight:700;color:var(--navy);margin-bottom:6px;">You're Satisfied</h4>
+        <p style="color:var(--gray);font-size:0.87rem;line-height:1.6;">We don't leave until you're 100% happy. Backed by our 2-year warranty.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════ -->
+<section id="testimonials" style="background:var(--offwhite);padding:6rem 1.5rem;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:3.5rem;">
+      <span class="section-label reveal">What Clients Say</span>
+      <h2 class="section-title reveal delay-1">Real Reviews From Real People</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;">
+
+      <div class="testimonial-card reveal delay-1">
+        <div style="color:var(--burgundy);font-size:1.3rem;margin-bottom:0.8rem;">⭐⭐⭐⭐⭐</div>
+        <p style="color:#444;line-height:1.7;font-size:0.95rem;margin-bottom:1.2rem;">"Adelek fixed our burst pipe within 2 hours of calling. Very professional team, clean work, and fair pricing. Highly recommended!"</p>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--burgundy));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.9rem;">AO</div>
+          <div>
+            <div style="font-weight:700;font-size:0.9rem;color:var(--navy);">Adebayo Okonkwo</div>
+            <div style="color:var(--gray);font-size:0.78rem;">Lagos, Nigeria</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal delay-2">
+        <div style="color:var(--burgundy);font-size:1.3rem;margin-bottom:0.8rem;">⭐⭐⭐⭐⭐</div>
+        <p style="color:#444;line-height:1.7;font-size:0.95rem;margin-bottom:1.2rem;">"They installed all plumbing for my 3-bedroom house. The work was perfect — no leaks, no issues. I'll use them again for my next project."</p>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--burgundy));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.9rem;">FI</div>
+          <div>
+            <div style="font-weight:700;font-size:0.9rem;color:var(--navy);">Fatima Ibrahim</div>
+            <div style="color:var(--gray);font-size:0.78rem;">Abuja, Nigeria</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal delay-3">
+        <div style="color:var(--burgundy);font-size:1.3rem;margin-bottom:0.8rem;">⭐⭐⭐⭐⭐</div>
+        <p style="color:#444;line-height:1.7;font-size:0.95rem;margin-bottom:1.2rem;">"Best plumbers in town! Fixed my overhead tank connection same day. Price was very reasonable and the team was respectful. 10/10."</p>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--burgundy));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.9rem;">CE</div>
+          <div>
+            <div style="font-weight:700;font-size:0.9rem;color:var(--navy);">Chukwuemeka Eze</div>
+            <div style="color:var(--gray);font-size:0.78rem;">Port Harcourt, Nigeria</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CONTACT
+════════════════════════════════════ -->
+<section id="contact" style="background:linear-gradient(135deg,var(--dark),var(--navy));padding:6rem 1.5rem;">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+
+    <!-- Left -->
+    <div class="reveal-left">
+      <span class="section-label" style="color:#c8d8f8;">Contact Us</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;color:#fff;margin-bottom:1rem;">Let's Fix It Today</h2>
+      <p style="color:rgba(200,216,248,0.75);line-height:1.7;margin-bottom:2rem;">Tell us your plumbing problem and we'll get back to you within 30 minutes with a free quote.</p>
+
+      <div style="display:flex;flex-direction:column;gap:1.2rem;">
+        <a href="tel:+2348060175353" style="display:flex;align-items:center;gap:12px;color:rgba(200,216,248,0.85);text-decoration:none;font-size:0.95rem;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(200,216,248,0.85)'">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--burgundy);display:flex;align-items:center;justify-content:center;">📞</div>
+          <div><div style="font-weight:700;color:#fff;">Call Us Now</div><div style="font-size:0.85rem;">+234 806 017 5353</div></div>
+        </a>
+        <a href="https://wa.me/2348060175353" style="display:flex;align-items:center;gap:12px;color:rgba(200,216,248,0.85);text-decoration:none;font-size:0.95rem;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(200,216,248,0.85)'">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--burgundy);display:flex;align-items:center;justify-content:center;">💬</div>
+          <div><div style="font-weight:700;color:#fff;">WhatsApp</div><div style="font-size:0.85rem;">+234 806 017 5353</div></div>
+        </a>
+        <div style="display:flex;align-items:center;gap:12px;color:rgba(200,216,248,0.85);">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--burgundy);display:flex;align-items:center;justify-content:center;">📍</div>
+          <div><div style="font-weight:700;color:#fff;">Location</div><div style="font-size:0.85rem;">Nigeria — We come to you</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: form -->
+    <div class="reveal-right">
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:2rem;backdrop-filter:blur(8px);">
+        <h3 style="color:#fff;font-weight:700;margin-bottom:1.5rem;">Get a Free Quote</h3>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div>
+            <label style="color:rgba(200,216,248,0.8);font-size:0.82rem;font-weight:600;display:block;margin-bottom:6px;">Your Name</label>
+            <input type="text" placeholder="e.g. John Okafor" class="form-input" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);color:#fff;" />
+          </div>
+          <div>
+            <label style="color:rgba(200,216,248,0.8);font-size:0.82rem;font-weight:600;display:block;margin-bottom:6px;">Phone Number</label>
+            <input type="tel" placeholder="+234 806 017 5353" class="form-input" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);color:#fff;" />
+          </div>
+          <div>
+            <label style="color:rgba(200,216,248,0.8);font-size:0.82rem;font-weight:600;display:block;margin-bottom:6px;">Service Needed</label>
+            <select class="form-input" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);color:#fff;">
+              <option value="" style="background:#1a3a6b;">Select a service...</option>
+              <option style="background:#1a3a6b;">Pipe Installation</option>
+              <option style="background:#1a3a6b;">Leak Detection & Repair</option>
+              <option style="background:#1a3a6b;">Bathroom & Toilet Fitting</option>
+              <option style="background:#1a3a6b;">Overhead Tank Installation</option>
+              <option style="background:#1a3a6b;">Emergency Plumbing</option>
+              <option style="background:#1a3a6b;">Commercial Plumbing</option>
+            </select>
+          </div>
+          <div>
+            <label style="color:rgba(200,216,248,0.8);font-size:0.82rem;font-weight:600;display:block;margin-bottom:6px;">Describe the Problem</label>
+            <textarea placeholder="Tell us what's happening..." rows="3" class="form-input" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);color:#fff;resize:vertical;"></textarea>
+          </div>
+          <button class="btn-primary" style="width:100%;justify-content:center;font-size:1rem;" onclick="handleSubmit(this)">
+            🔧 Send My Request
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer style="background:var(--dark);padding:3rem 1.5rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-bottom:2.5rem;">
+
+      <div>
+        <img src="adelek.png" alt="Adelek" style="height:50px;width:auto;filter:brightness(0) invert(1);opacity:0.85;margin-bottom:1rem;"/>
+        <p style="color:rgba(200,216,248,0.55);font-size:0.85rem;line-height:1.7;">Nigeria's trusted plumbing and pipe fitting company. Quality work, honest pricing, every time.</p>
+      </div>
+
+      <div>
+        <h4 style="color:#fff;font-weight:700;margin-bottom:1rem;font-size:0.9rem;letter-spacing:0.05em;">Services</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;">
+          <li><a href="#services" style="color:rgba(200,216,248,0.55);font-size:0.85rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(200,216,248,0.55)'">Pipe Installation</a></li>
+          <li><a href="#services" style="color:rgba(200,216,248,0.55);font-size:0.85rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(200,216,248,0.55)'">Leak Repair</a></li>
+          <li><a href="#services" style="color:rgba(200,216,248,0.55);font-size:0.85rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(200,216,248,0.55)'">Bathroom Fitting</a></li>
+          <li><a href="#services" style="color:rgba(200,216,248,0.55);font-size:0.85rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(200,216,248,0.55)'">Emergency Plumbing</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="color:#fff;font-weight:700;margin-bottom:1rem;font-size:0.9rem;letter-spacing:0.05em;">Quick Links</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;">
+          <li><a href="#why" style="color:rgba(200,216,248,0.55);font-size:0.85rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(200,216,248,0.55)'">Why Choose Us</a></li>
+          <li><a href="#process" style="color:rgba(200,216,248,0.55);font-size:0.85rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(200,216,248,0.55)'">How It Works</a></li>
+          <li><a href="#testimonials" style="color:rgba(200,216,248,0.55);font-size:0.85rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(200,216,248,0.55)'">Reviews</a></li>
+          <li><a href="#contact" style="color:rgba(200,216,248,0.55);font-size:0.85rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(200,216,248,0.55)'">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="color:#fff;font-weight:700;margin-bottom:1rem;font-size:0.9rem;letter-spacing:0.05em;">Emergency?</h4>
+        <p style="color:rgba(200,216,248,0.55);font-size:0.85rem;margin-bottom:1rem;">We're available 24/7. Call us right now.</p>
+        <a href="tel:+2348060175353" class="btn-primary" style="font-size:0.82rem;padding:0.6rem 1.2rem;">📞 Call Now</a> <a href="https://wa.me/2348060175353" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.2rem;background:#25D366;color:#fff;font-family:Montserrat,sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.06em;border-radius:50px;text-decoration:none;transition:all 0.3s;margin-left:8px;" onmouseover="this.style.background='#128C7E';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#25D366';this.style.transform='translateY(0)'">💬 WhatsApp</a>
+      </div>
+
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;text-align:center;color:rgba(200,216,248,0.35);font-size:0.8rem;">
+      © 2026 Adelek Plumbering & Pipe Fitting Nig. Ltd · All Rights Reserved
+    </div>
+  </div>
+</footer>
+
+
+
+
+<!-- ════════════════════════════════════
+     RESPONSIVE CSS
+════════════════════════════════════ -->
+<style>
+  @media (max-width: 768px) {
+    .hidden-mobile { display:none !important; }
+    #hamburger { display:block !important; }
+    #why > div > div,
+    #contact > div > div { grid-template-columns:1fr !important; gap:2rem !important; }
+  }
+  @media (min-width: 769px) {
+    #mobile-menu { display:none !important; }
+  }
+</style>
+
+
+<!-- ════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════ -->
+<script>
+  // 1. Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // 2. Mobile hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  // 3. Scroll reveal
+  const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // 4. Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if(t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+    });
+  });
+
+  // 5. Form submit
+  function handleSubmit(btn) {
+    btn.textContent = '✅ Request Sent!';
+    btn.style.background = '#1a6b3a';
+    setTimeout(() => {
+      btn.textContent = '🔧 Send My Request';
+      btn.style.background = '';
+    }, 3000);
+  }
+</script>
+
+</body>
+</html>
